@@ -1,66 +1,56 @@
 import React, { useState, useEffect } from "react";
 import * as Realm from "realm-web";
 
-// Create the Application
+const toObject = (input) =>
+  Object.assign(...input.map((elem) => ({ [elem._id]: elem.count })));
 
 const app = new Realm.App({ id: "dashboard-ddmhi" });
 
-// Define the App component
-
 const App = () => {
   // Set state variables
-
   const [user, setUser] = useState();
-  const [events, setEvents] = useState([]); // This useEffect hook will run only once when the page is loaded
+  const [answersTotal, setAnswersTotal] = useState([]);
 
   // This useEffect hook will run only once when the page is loaded
   useEffect(() => {
     const login = async () => {
       // Authenticate anonymously
       const user = await app.logIn(Realm.Credentials.anonymous());
-      setUser(user); // Connect to the database
+      setUser(user);
 
+      // Connect to the database
       const mongodb = app.currentUser.mongoClient("mongodb-atlas");
-      const collection = mongodb.db("dasbot-meta").collection("answers_total"); // Everytime a change happens in the stream, add it to the list of events
+      const answers_total = mongodb
+        .db("dasbot-meta")
+        .collection("answers_total");
 
-      for await (const change of collection.watch()) {
-        setEvents((events) => [...events, change]);
+      // Get the initial numbers
+      const initialTotal = await user.functions.getAnswersTotal();
+      setAnswersTotal(toObject(initialTotal));
+
+      // Process updates
+      for await (const change of answers_total.watch()) {
+        const key = change.fullDocument?._id;
+        const data = change.fullDocument?.count;
+        setAnswersTotal((prevAnswersTotal) => ({
+          ...prevAnswersTotal,
+          [key]: data,
+        }));
       }
     };
     login();
   }, []);
 
-  // Return the JSX that will generate HTML for the page
   return (
     <div className="App">
       {!!user && (
-        <div className="App-header">
-          <h1>Connected as user ${user.id}</h1>
-
+        <>
           <div>
-            <p>Latest events:</p>
-
-            <table>
-              <thead>
-                <tr>
-                  <td>Operation</td>
-                  <td>Document Key</td>
-                  <td>Full Document</td>
-                </tr>
-              </thead>
-
-              <tbody>
-                {events.map((e, i) => (
-                  <tr key={i}>
-                    <td>{e.operationType}</td>
-                    <td>{e.documentKey._id.toString()}</td>
-                    <td>{JSON.stringify(e.fullDocument)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <p>Questions answered so far:</p>
+            <p>Correct: {answersTotal.correct}</p>
+            <p>Incorrect: {answersTotal.incorrect}</p>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
