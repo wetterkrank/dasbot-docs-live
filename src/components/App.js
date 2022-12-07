@@ -6,9 +6,9 @@ const App = () => (
 
     <footer className="footer mt-auto py-3 bg-light">
       <div className="container d-flex justify-content-between align-items-end">
-        <span className="fs-3">
+        <span className="font-lg">
           <a
-            className="text-secondary font-lg"
+            className="text-secondary no-underline"
             href="https://github.com/wetterkrank/dasbot"
           >
             <svg
@@ -24,7 +24,7 @@ const App = () => (
           </a>
           &nbsp;
           <a
-            className="text-secondary font-lg"
+            className="text-secondary no-underline"
             href="https://www.linkedin.com/in/antsiferov/"
           >
             <svg
@@ -40,7 +40,7 @@ const App = () => (
           </a>
         </span>
         <span className="text-end text-muted fw-light">
-          © 2020 Alex Antsiferov
+          © 2020&ndash;{new Date().getFullYear()} Alex Antsiferov
         </span>
       </div>
     </footer>

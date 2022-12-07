@@ -73,7 +73,7 @@ const MainPage = () => (
             </svg>
             Get it here
           </a>
-          <Link to={`stats`} className="btn btn-link text-secondary">See the live usage stats</Link>
+          <Link to={`stats`} className="btn btn-link text-secondary">See the live stats</Link>
         </div>
 
       </div>
