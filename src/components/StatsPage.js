@@ -14,7 +14,7 @@ const StatsPage = () => {
 
   // Set state variables
   const [user, setUser] = useState();
-  const [answersTotal, setAnswersTotal] = useState([]);
+  const [answersTotal, setAnswersTotal] = useState(null);
 
   // This useEffect hook will run only once when the page is loaded
   useEffect(() => {
@@ -36,10 +36,10 @@ const StatsPage = () => {
       // Process updates
       for await (const change of answers_total.watch()) {
         const key = change.fullDocument?._id;
-        const data = change.fullDocument?.count;
-        setAnswersTotal((prevAnswersTotal) => ({
-          ...prevAnswersTotal,
-          [key]: data,
+        const value = change.fullDocument?.count;
+        setAnswersTotal((previous) => ({
+          ...previous,
+          [key]: value,
         }));
       }
     };
@@ -49,9 +49,6 @@ const StatsPage = () => {
 
   const Stats = ({ answersTotal }) => (
     <>
-      {/* <div className="h2 mb-3 text-center text-monospace">
-        Dasbot's questions answered
-      </div> */}
       <div className="row mb-5">
         <div className="col-6 text-right text-monospace">
           <p className="h4 mb-3"><span className="d-none d-md-inline">Correct answers </span>✅</p>
@@ -72,7 +69,7 @@ const StatsPage = () => {
     <>
       <Navbar />
       <div className="container h-100 d-flex flex-column justify-content-center">
-        {!!user ? <Stats answersTotal={answersTotal} /> : <Spinner />}
+        {answersTotal ? <Stats answersTotal={answersTotal} /> : <Spinner />}
       </div>
     </>
   );

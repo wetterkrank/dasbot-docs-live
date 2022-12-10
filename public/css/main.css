@@ -34,6 +34,10 @@ p {
   font-size: x-large;
 }
 
+a:hover.no-underline {
+  text-decoration: none;
+}
+
 @media (min-width: 1600px) {
     html {
         font-size: 1.1em;
