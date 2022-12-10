@@ -13,7 +13,6 @@ const StatsPage = () => {
   const app = new Realm.App({ id: "dashboard-ddmhi" });
 
   // Set state variables
-  const [user, setUser] = useState();
   const [answersTotal, setAnswersTotal] = useState(null);
 
   // This useEffect hook will run only once when the page is loaded
@@ -21,7 +20,6 @@ const StatsPage = () => {
     const login = async () => {
       // Authenticate anonymously
       const user = await app.logIn(Realm.Credentials.anonymous());
-      setUser(user);
 
       // Connect to the database
       const mongodb = app.currentUser.mongoClient("mongodb-atlas");
