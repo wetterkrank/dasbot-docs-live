@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const MainPage = () => (
   <div className="container">
-    <div className="row py-3 py-md-5">
+    <div className="row py-3 pt-md-5">
       <div className="col-md-7">
         <svg
           id="bot-icon"
