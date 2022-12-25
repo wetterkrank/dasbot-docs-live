@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => (
   <footer className="footer mt-auto py-3 bg-light">
     <div className="container d-flex justify-content-between align-items-end">
@@ -35,7 +37,8 @@ const Footer = () => (
         </a>
       </span>
       <span className="text-end text-muted fw-light">
-        © 2020&ndash;{new Date().getFullYear()} Alex Antsiferov
+        © 2020&ndash;{new Date().getFullYear()} Alex Antsiferov ·&nbsp;
+      <Link to={`stats`} className="text-secondary">stats page </Link>
       </span>
     </div>
   </footer>

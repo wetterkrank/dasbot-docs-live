@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 import DasbotLogo from "./DasbotLogo";
 
 const MainPage = () => (
@@ -39,7 +37,7 @@ const MainPage = () => (
                   font-lg
                   text-white
                   btn btn-info
-                  my-5
+                  my-3
                   pl-5
                   position-relative
                 "
@@ -58,7 +56,6 @@ const MainPage = () => (
             </svg>
             Get it here
           </a>
-          <Link to={`stats`} className="btn btn-link text-secondary">See the live stats</Link>
         </div>
 
       </div>
