@@ -12,7 +12,7 @@ const MainPage = () => (
         </p>
         <p>
           It will send you a short quiz on Telegram every day. With its
-          guidance, you will learn the genders of 2000 most frequently used
+          guidance, you will learn the genders of the 2000 most frequently used
           German nouns.
         </p>
         <p>
